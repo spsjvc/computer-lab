@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Col } from 'antd'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
+import { Row, Col, message } from 'antd'
 
 import { Button } from '../../components'
 
@@ -26,6 +29,13 @@ class Home extends Component {
             <Button
               type="primary"
               onClick={() => {
+                if (this.props.studies.length === 0) {
+                  message.error(
+                    'Da biste kreirali predmet morate prethodno kreirati bar jedan smer.'
+                  )
+                  return
+                }
+
                 this.props.history.push('/subjects')
               }}
             >
@@ -54,4 +64,15 @@ class Home extends Component {
   }
 }
 
-export default Home
+const mapStateToProps = state => ({
+  studies: state.studies,
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+)
