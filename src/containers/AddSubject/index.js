@@ -12,7 +12,7 @@ class AddSubject extends Component {
     form: {
       id: '',
       name: '',
-      study: this.props.studies[0].value,
+      study: this.props.studies[0].id,
       description: '',
       groupSize: '',
       minimumLength: '',
@@ -109,7 +109,7 @@ class AddSubject extends Component {
                 label: study.name,
               }))}
               onChange={value => {
-                console.log(value)
+                this.handleFormInputChange('study', value)
               }}
             />
             <Input
