@@ -15,16 +15,36 @@ class Home extends Component {
             lg={{ span: '6', offset: '9' }}
           >
             <h1>Računarski centar</h1>
-            <Button type="primary" onClick={this.handleSubmit}>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.props.history.push('/classrooms')
+              }}
+            >
               Učionice
             </Button>
-            <Button type="primary" onClick={this.handleSubmit}>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.props.history.push('/subjects')
+              }}
+            >
               Predmeti
             </Button>
-            <Button type="primary" onClick={this.handleSubmit}>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.props.history.push('/studies')
+              }}
+            >
               Smerovi
             </Button>
-            <Button type="primary" onClick={this.handleSubmit}>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.props.history.push('/software')
+              }}
+            >
               Softver
             </Button>
           </Col>

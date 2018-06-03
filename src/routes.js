@@ -1,10 +1,40 @@
-import { Home, AddStudy, AddSubject, AddSoftware, AddClassroom } from './containers'
+import {
+  Home,
+  Studies,
+  Subjects,
+  Software,
+  Classrooms,
+  AddStudy,
+  AddSubject,
+  AddSoftware,
+  AddClassroom,
+} from './containers'
 
 const routes = [
   {
     path: '/',
     exact: true,
     component: Home,
+  },
+  {
+    path: '/studies',
+    exact: true,
+    component: Studies,
+  },
+  {
+    path: '/subjects',
+    exact: true,
+    component: Subjects,
+  },
+  {
+    path: '/software',
+    exact: true,
+    component: Software,
+  },
+  {
+    path: '/classrooms',
+    exact: true,
+    component: Classrooms,
   },
   {
     path: '/add-study',
@@ -17,14 +47,14 @@ const routes = [
     component: AddSubject,
   },
   {
-    path: '/add-classroom',
-    exact: true,
-    component: AddClassroom,
-  },
-  {
     path: '/add-software',
     exact: true,
     component: AddSoftware,
+  },
+  {
+    path: '/add-classroom',
+    exact: true,
+    component: AddClassroom,
   },
 ]
 
