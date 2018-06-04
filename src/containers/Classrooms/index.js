@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Table, Icon, Button, Tag } from 'antd'
+import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
+
+import * as actions from './actions'
 
 class Classrooms extends Component {
   render() {
@@ -81,9 +83,18 @@ class Classrooms extends Component {
                     <Button style={{ marginRight: '5px' }}>
                       <Icon type="edit" />
                     </Button>
-                    <Button type="danger">
-                      <Icon type="delete" />
-                    </Button>
+                    <Popconfirm
+                      title="Da li ste sigurni?"
+                      okText="Da"
+                      cancelText="Ne"
+                      onConfirm={() => {
+                        this.props.deleteClassroom(row.id)
+                      }}
+                    >
+                      <Button type="danger">
+                        <Icon type="delete" />
+                      </Button>
+                    </Popconfirm>
                   </Fragment>
                 )}
               />
@@ -100,7 +111,7 @@ const mapStateToProps = state => ({
   software: state.software,
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 
 export default withRouter(
   connect(

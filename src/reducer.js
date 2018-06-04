@@ -27,6 +27,30 @@ const reducer = (state = initialState, action) => {
         software: [...state.software, action.payload],
       }
 
+    case ACTION.DELETE_CLASSROOM:
+      return {
+        ...state,
+        classrooms: state.classrooms.filter(c => c.id !== action.payload),
+      }
+
+    case ACTION.DELETE_SUBJECT:
+      return {
+        ...state,
+        subjects: state.subjects.filter(s => s.id !== action.payload),
+      }
+
+    case ACTION.DELETE_STUDY:
+      return {
+        ...state,
+        studies: state.studies.filter(s => s.id !== action.payload),
+      }
+
+    case ACTION.DELETE_SOFTWARE:
+      return {
+        ...state,
+        software: state.software.filter(s => s.id !== action.payload),
+      }
+
     default:
       return state
   }

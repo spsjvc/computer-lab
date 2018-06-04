@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Table, Button } from 'antd'
+import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
+
+import * as actions from './actions'
 
 class Software extends Component {
   render() {
@@ -40,6 +42,28 @@ class Software extends Component {
               <Table.Column title="Godina izdanja" dataIndex="year" />
               <Table.Column title="Cena (RSD)" dataIndex="price" />
               <Table.Column title="Opis" dataIndex="description" />
+              <Table.Column
+                title=""
+                render={row => (
+                  <Fragment>
+                    <Button style={{ marginRight: '5px' }}>
+                      <Icon type="edit" />
+                    </Button>
+                    <Popconfirm
+                      title="Da li ste sigurni?"
+                      okText="Da"
+                      cancelText="Ne"
+                      onConfirm={() => {
+                        this.props.deleteSoftware(row.id)
+                      }}
+                    >
+                      <Button type="danger">
+                        <Icon type="delete" />
+                      </Button>
+                    </Popconfirm>
+                  </Fragment>
+                )}
+              />
             </Table>
           </Col>
         </Row>
@@ -52,7 +76,7 @@ const mapStateToProps = state => ({
   software: state.software,
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 
 export default withRouter(
   connect(
