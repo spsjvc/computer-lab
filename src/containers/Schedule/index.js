@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import { Row, Col, List, Tabs } from 'antd'
+import { Row, Col, List, Tabs, Tooltip, Icon } from 'antd'
 import moment from 'moment'
 import { sortBy } from 'lodash'
+
+import * as actions from './actions'
 
 import Subject from './Subject'
 import TimetableField from './TimetableField'
@@ -59,16 +61,56 @@ class Schedule extends Component {
             md={{ span: '18', offset: '1' }}
             lg={{ span: '18', offset: '1' }}
           >
-            <Tabs type="card">
-              {this.props.classrooms.map(classroom => (
+            <Tabs
+              type="card"
+              onChange={value => {
+                this.props.selectClassroom(value)
+              }}
+            >
+              {sortBy(this.props.classrooms, classroom => classroom.id).map(classroom => (
                 <Tabs.TabPane key={classroom.id} tab={`Učionica ${classroom.id}`}>
                   <React.Fragment>
                     <div
                       style={{
+                        textAlign: 'center',
                         width: `${5}%`,
                         display: 'inline-block',
                       }}
                     >
+                      <Tooltip
+                        title={
+                          <div>
+                            <strong>Učionica {classroom.id}</strong>
+                            <br />
+                            <br />
+                            Broj radnih mesta: {classroom.numberOfSeats}
+                            <br />
+                            Projektor: {classroom.hasProjector ? 'Da' : 'Ne'}
+                            <br />
+                            Tabla: {classroom.hasBoard ? 'Da' : 'Ne'}
+                            <br />
+                            Pametna tabla: {classroom.hasSmartBoard ? 'Da' : 'Ne'}
+                            <br />
+                            Operativni sistem:{' '}
+                            {classroom.operatingSystems
+                              .reduce((acc, os) => `${acc}${os}, `, '')
+                              .slice(0, -2)}
+                            <br />
+                            Softver:{' '}
+                            {classroom.software
+                              .map(
+                                s => this.props.software.find(software => s === software.id).name
+                              )
+                              .reduce((acc, software) => `${acc}${software}, `, '')
+                              .slice(0, -2)}
+                            <br />
+                          </div>
+                        }
+                      >
+                        <a style={{ fontSize: 20 }}>
+                          <Icon type="info-circle" />
+                        </a>
+                      </Tooltip>
                       {[...Array(minutesDuration).keys()].map((minute, index) => (
                         <div
                           key={index}
@@ -112,10 +154,11 @@ class Schedule extends Component {
 
 const mapStateToProps = state => ({
   classrooms: state.classrooms,
+  software: state.software,
   subjects: state.subjects,
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 
 export default withRouter(
   DragDropContext(HTML5Backend)(

@@ -10,6 +10,7 @@ const initialState =
   stateFromStorage !== null
     ? stateFromStorage
     : {
+        selectedClassroom: '101',
         classrooms: [
           {
             id: '101',
@@ -23,10 +24,28 @@ const initialState =
               Array(60).fill(0),
               Array(60).fill(0),
             ],
-            hasBoard: false,
-            hasProjector: false,
+            hasBoard: true,
+            hasProjector: true,
             hasSmartBoard: false,
-            operatingSystems: [],
+            operatingSystems: ['Windows'],
+            software: ['A-1', 'A-2'],
+          },
+          {
+            id: '102',
+            description: '',
+            numberOfSeats: '40',
+            layout: [
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+            ],
+            hasBoard: true,
+            hasProjector: true,
+            hasSmartBoard: true,
+            operatingSystems: ['Linux'],
             software: ['A-1', 'A-2'],
           },
         ],
@@ -41,7 +60,7 @@ const initialState =
             minimumLength: '2',
             numberOfTerms: '2',
             numberOfTermsRemaining: 2,
-            needsBoard: false,
+            needsBoard: true,
             needsProjector: false,
             needsSmartBoard: false,
             operatingSystem: 'Windows',

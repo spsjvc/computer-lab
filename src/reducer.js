@@ -108,6 +108,9 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case ACTION.SELECT_CLASSROOM:
+      return { ...state, selectedClassroom: action.payload }
+
     default:
       return state
   }
