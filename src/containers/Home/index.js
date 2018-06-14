@@ -57,6 +57,14 @@ class Home extends Component {
             >
               Softver
             </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.props.history.push('/schedule')
+              }}
+            >
+              Raspored
+            </Button>
           </Col>
         </Row>
       </Fragment>

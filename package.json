@@ -5,7 +5,12 @@
   "dependencies": {
     "antd": "^3.6.1",
     "history": "^4.7.2",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "randomcolor": "^0.5.3",
     "react": "^16.4.0",
+    "react-dnd": "^4.0.5",
+    "react-dnd-html5-backend": "^4.0.5",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",

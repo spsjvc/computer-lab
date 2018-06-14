@@ -10,9 +10,68 @@ const initialState =
   stateFromStorage !== null
     ? stateFromStorage
     : {
-        classrooms: [],
-        subjects: [],
-        studies: [],
+        classrooms: [
+          {
+            id: '101',
+            description: '',
+            numberOfSeats: '20',
+            layout: [
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+              Array(60).fill(0),
+            ],
+            hasBoard: false,
+            hasProjector: false,
+            hasSmartBoard: false,
+            operatingSystems: [],
+            software: [],
+          },
+        ],
+        subjects: [
+          {
+            id: 'A-1',
+            name: 'Interakcija čovek računar',
+            study: 'A-1',
+            color: '#0faf4f',
+            description: '',
+            groupSize: '10',
+            minimumLength: '2',
+            numberOfTerms: '2',
+            numberOfTermsRemaining: 2,
+            needsBoard: false,
+            needsProjector: false,
+            needsSmartBoard: false,
+            operatingSystem: 'Windows',
+            software: [],
+          },
+          {
+            id: 'A-2',
+            name: 'Programski prevodioci',
+            study: 'A-1',
+            color: '#a6f282',
+            description: '',
+            groupSize: '10',
+            minimumLength: '1',
+            numberOfTerms: '4',
+            numberOfTermsRemaining: 4,
+            needsBoard: false,
+            needsProjector: false,
+            needsSmartBoard: false,
+            operatingSystem: 'Windows',
+            software: [],
+          },
+        ],
+        studies: [
+          {
+            id: 'A-1',
+            name: 'Softversko inženjerstvo i informacione tehnologije',
+            date: '01.09.2013.',
+            description: '',
+          },
+        ],
         software: [],
       }
 

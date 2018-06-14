@@ -18,6 +18,14 @@ class AddClassroom extends Component {
       hasSmartBoard: false,
       operatingSystems: [],
       software: [],
+      layout: [
+        Array(60).fill(0),
+        Array(60).fill(0),
+        Array(60).fill(0),
+        Array(60).fill(0),
+        Array(60).fill(0),
+        Array(60).fill(0),
+      ],
     },
   }
 

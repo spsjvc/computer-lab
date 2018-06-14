@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, message } from 'antd'
+import randomColor from 'randomcolor'
 
 import * as actions from './actions'
 import { Input, Button, Switch, Select, MultiSelect } from '../../components'
@@ -17,11 +18,13 @@ class AddSubject extends Component {
       groupSize: '',
       minimumLength: '',
       numberOfTerms: '',
+      numberOfTermsRemaining: '',
       needsProjector: false,
       needsBoard: false,
       needsSmartBoard: false,
       operatingSystem: 'Windows',
       software: [],
+      color: randomColor({ hue: 'green' }),
     },
   }
 
@@ -156,6 +159,7 @@ class AddSubject extends Component {
               }}
               onChange={value => {
                 this.handleFormInputChange('numberOfTerms', value)
+                this.handleFormInputChange('numberOfTermsRemaining', parseInt(value, 10))
               }}
             />
             <Switch

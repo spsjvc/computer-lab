@@ -3,6 +3,7 @@ import {
   Studies,
   Subjects,
   Software,
+  Schedule,
   Classrooms,
   AddStudy,
   AddSubject,
@@ -30,6 +31,11 @@ const routes = [
     path: '/software',
     exact: true,
     component: Software,
+  },
+  {
+    path: '/schedule',
+    exact: true,
+    component: Schedule,
   },
   {
     path: '/classrooms',
