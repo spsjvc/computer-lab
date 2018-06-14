@@ -38,15 +38,20 @@ class Schedule extends Component {
             md={{ span: '3', offset: '1' }}
             lg={{ span: '3', offset: '1' }}
           >
-            Potrebno rasporediti:
-            <List
-              dataSource={sortBy(this.props.subjects, subject => subject.id)}
-              renderItem={subject =>
-                [...Array(subject.numberOfTermsRemaining).keys()].map(term => (
-                  <Subject subject={subject} />
-                ))
-              }
-            />
+            <div style={{ fontSize: 12 }}>
+              Predmeti za raspoređivanje:<br />
+              <br />
+            </div>
+            <div style={{ height: 'calc(100vh - 120px)', overflow: 'auto' }}>
+              <List
+                dataSource={sortBy(this.props.subjects, subject => subject.id)}
+                renderItem={subject =>
+                  [...Array(subject.numberOfTermsRemaining).keys()].map(term => (
+                    <Subject subject={subject} />
+                  ))
+                }
+              />
+            </div>
           </Col>
           <Col
             xs={{ span: '18', offset: '1' }}

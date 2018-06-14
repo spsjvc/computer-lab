@@ -27,7 +27,7 @@ const initialState =
             hasProjector: false,
             hasSmartBoard: false,
             operatingSystems: [],
-            software: [],
+            software: ['A-1', 'A-2'],
           },
         ],
         subjects: [
@@ -45,7 +45,7 @@ const initialState =
             needsProjector: false,
             needsSmartBoard: false,
             operatingSystem: 'Windows',
-            software: [],
+            software: ['A-1', 'A-2'],
           },
           {
             id: 'A-2',
@@ -61,7 +61,7 @@ const initialState =
             needsProjector: false,
             needsSmartBoard: false,
             operatingSystem: 'Windows',
-            software: [],
+            software: ['A-2'],
           },
         ],
         studies: [
@@ -72,7 +72,28 @@ const initialState =
             description: '',
           },
         ],
-        software: [],
+        software: [
+          {
+            id: 'A-1',
+            name: 'Microsoft Excel',
+            manufacturer: 'Microsoft',
+            operatingSystem: 'Windows',
+            website: '-',
+            year: '2018',
+            price: '6000',
+            description: '',
+          },
+          {
+            id: 'A-2',
+            name: 'Microsoft Word',
+            manufacturer: 'Microsoft',
+            operatingSystem: 'Windows',
+            website: '-',
+            year: '2018',
+            price: '6000',
+            description: '',
+          },
+        ],
       }
 
 const configureStoreWithHistory = history => {

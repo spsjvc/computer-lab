@@ -144,9 +144,9 @@ class TimetableField extends Component {
           <Tooltip
             title={
               <div style={{ textAlign: 'center' }}>
-                {subject.id}
+                <strong>{subject.name}</strong>
                 <br />
-                {subject.name}
+                {this.props.studies.find(s => s.id === subject.study).name}
                 <br />
                 {moment('2018-01-01 07:00')
                   .add(termStartY * 15, 'minutes')
@@ -177,6 +177,7 @@ class TimetableField extends Component {
 
 const mapStateToProps = state => ({
   subjects: state.subjects,
+  studies: state.studies,
   classrooms: state.classrooms,
 })
 
