@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Button, Switch, Select, MultiSelect } from '../../components'
@@ -27,12 +28,18 @@ class EditSubject extends Component {
     },
   }
 
-  componentWillMount() {
-    if (this.props.editingSubject === null) {
-      this.props.history.push('/subjects')
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/subjects')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
     }
   }
-
   handleFormInputChange = (field, value) => {
     this.setState({
       form: {
@@ -48,15 +55,15 @@ class EditSubject extends Component {
         ...this.state.form,
         numberOfTermsRemaining: parseInt(this.state.form.numberOfTerms, 10),
       })
-      this.props.setEditingSubject(null)
       this.props.history.push('/subjects')
+      this.props.setEditingSubject(null)
     }
   }
 
   isFormValid = () => {
     const isIdInputValid = this.idInput.isValid()
     const isNameInputValid = this.nameInput.isValid()
-    const isDescriptionInputValid = this.descriptionInput.isValid()
+
     const isGroupSizeInputValid = this.groupSizeInput.isValid()
     const isMinimumLengthInputValid = this.minimumLengthInput.isValid()
     const isNumberOfTermsInputValid = this.numberOfTermsInput.isValid()
@@ -64,7 +71,6 @@ class EditSubject extends Component {
     return (
       isIdInputValid &&
       isNameInputValid &&
-      isDescriptionInputValid &&
       isGroupSizeInputValid &&
       isMinimumLengthInputValid &&
       isNumberOfTermsInputValid
@@ -73,7 +79,7 @@ class EditSubject extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -88,7 +94,7 @@ class EditSubject extends Component {
                 this.props.setEditingSubject(null)
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -99,7 +105,7 @@ class EditSubject extends Component {
             md={{ span: '12', offset: '1' }}
             lg={{ span: '8', offset: '1' }}
           >
-            <h1>Izmena predmeta</h1>
+            <h2>Izmena predmeta</h2>
             <Input
               disabled
               label="Oznaka"
@@ -229,11 +235,11 @@ class EditSubject extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Izmeni predmet
+              Izmeni predmet (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

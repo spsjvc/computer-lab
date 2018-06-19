@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Switch, Button, MultiSelect } from '../../components'
@@ -22,9 +23,16 @@ class EditClassroom extends Component {
     },
   }
 
-  componentWillMount() {
-    if (this.props.editingClassroom === null) {
-      this.props.history.push('/classrooms')
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/classrooms')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
     }
   }
 
@@ -40,22 +48,21 @@ class EditClassroom extends Component {
   handleSubmit = () => {
     if (this.isFormValid()) {
       this.props.editClassroom(this.state.form)
-      this.props.setEditingClassroom(null)
       this.props.history.push('/classrooms')
+      this.props.setEditingClassroom(null)
     }
   }
 
   isFormValid = () => {
     const isIdInputValid = this.idInput.isValid()
-    const isDescriptionInputValid = this.descriptionInput.isValid()
     const isNumberOfSeatsInputValid = this.numberOfSeatsInput.isValid()
 
-    return isIdInputValid && isDescriptionInputValid && isNumberOfSeatsInputValid
+    return isIdInputValid && isNumberOfSeatsInputValid
   }
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -70,7 +77,7 @@ class EditClassroom extends Component {
                 this.props.history.push('/classrooms')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -162,11 +169,11 @@ class EditClassroom extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Izmeni učionicu
+              Izmeni učionicu (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

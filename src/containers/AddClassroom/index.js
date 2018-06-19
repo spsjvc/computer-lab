@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon, message } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Switch, Button, MultiSelect } from '../../components'
@@ -27,6 +28,19 @@ class AddClassroom extends Component {
         Array(60).fill(0),
       ],
     },
+  }
+
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/classrooms')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
+    }
   }
 
   handleFormInputChange = (field, value) => {
@@ -57,15 +71,14 @@ class AddClassroom extends Component {
 
   isFormValid = () => {
     const isIdInputValid = this.idInput.isValid()
-    const isDescriptionInputValid = this.descriptionInput.isValid()
     const isNumberOfSeatsInputValid = this.numberOfSeatsInput.isValid()
 
-    return isIdInputValid && isDescriptionInputValid && isNumberOfSeatsInputValid
+    return isIdInputValid && isNumberOfSeatsInputValid
   }
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -79,7 +92,7 @@ class AddClassroom extends Component {
                 this.props.history.push('/classrooms')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -104,7 +117,7 @@ class AddClassroom extends Component {
             />
             <Input
               label="Opis"
-              placeholder="Unesite opis"
+              placeholder="Unesite opis (opciono)"
               ref={ref => {
                 this.descriptionInput = ref
               }}
@@ -163,11 +176,11 @@ class AddClassroom extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Dodaj učionicu
+              Dodaj učionicu (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
 import { sortBy, truncate } from 'lodash'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -12,6 +13,19 @@ class Classrooms extends Component {
   state = {
     displayedData: this.props.classrooms,
     search: '',
+  }
+
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/')
+        break
+      case 'alt+2':
+        this.props.history.push('/add-classroom')
+        break
+      default:
+        break
+    }
   }
 
   handleFilters = filters => {
@@ -51,7 +65,7 @@ class Classrooms extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -65,7 +79,7 @@ class Classrooms extends Component {
                 this.props.history.push('/')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -85,7 +99,7 @@ class Classrooms extends Component {
               }}
             >
               <Icon type="plus-circle-o" />
-              Dodaj novu učionicu
+              Dodaj novu učionicu (⌥ + 2)
             </Button>
             <br />
             <Input
@@ -229,7 +243,7 @@ class Classrooms extends Component {
             </Table>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

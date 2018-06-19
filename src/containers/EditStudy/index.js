@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Button, DatePicker } from '../../components'
@@ -17,9 +18,16 @@ class EditStudy extends Component {
     },
   }
 
-  componentWillMount() {
-    if (this.props.editingStudy === null) {
-      this.props.history.push('/studies')
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/studies')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
     }
   }
 
@@ -35,8 +43,8 @@ class EditStudy extends Component {
   handleSubmit = () => {
     if (this.isFormValid()) {
       this.props.editStudy(this.state.form)
-      this.props.setEditingStudy(this.state.form)
       this.props.history.push('/studies')
+      this.props.setEditingStudy(this.state.form)
     }
   }
 
@@ -49,7 +57,7 @@ class EditStudy extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -64,7 +72,7 @@ class EditStudy extends Component {
                 this.props.history.push('/studies')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -119,11 +127,11 @@ class EditStudy extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Izmeni smer
+              Izmeni smer (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

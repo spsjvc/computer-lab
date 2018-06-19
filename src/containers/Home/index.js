@@ -1,15 +1,38 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, message } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import { Button } from '../../components'
 
 class Home extends Component {
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/classrooms')
+        break
+      case 'alt+2':
+        this.props.history.push('/subjects')
+        break
+      case 'alt+3':
+        this.props.history.push('/studies')
+        break
+      case 'alt+4':
+        this.props.history.push('/software')
+        break
+      case 'alt+5':
+        this.props.history.push('/schedule')
+        break
+      default:
+        break
+    }
+  }
+
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2,alt+3,alt+4,alt+5" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '55px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -24,7 +47,7 @@ class Home extends Component {
                 this.props.history.push('/classrooms')
               }}
             >
-              Pregled učionica
+              Pregled učionica (⌥ + 1)
             </Button>
             <Button
               type="primary"
@@ -39,7 +62,7 @@ class Home extends Component {
                 this.props.history.push('/subjects')
               }}
             >
-              Pregled predmeta
+              Pregled predmeta (⌥ + 2)
             </Button>
             <Button
               type="primary"
@@ -47,7 +70,7 @@ class Home extends Component {
                 this.props.history.push('/studies')
               }}
             >
-              Pregled smerova
+              Pregled smerova (⌥ + 3)
             </Button>
             <Button
               type="primary"
@@ -55,7 +78,7 @@ class Home extends Component {
                 this.props.history.push('/software')
               }}
             >
-              Pregled softvera
+              Pregled softvera (⌥ + 4)
             </Button>
             <Button
               type="primary"
@@ -63,11 +86,11 @@ class Home extends Component {
                 this.props.history.push('/schedule')
               }}
             >
-              Raspored po učionicama
+              Raspored po učionicama (⌥ + 5)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

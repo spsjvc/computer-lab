@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon, message } from 'antd'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Button, DatePicker } from '../../components'
@@ -15,6 +16,19 @@ class AddStudy extends Component {
       date: '',
       description: '',
     },
+  }
+
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/studies')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
+    }
   }
 
   handleFormInputChange = (field, value) => {
@@ -50,7 +64,7 @@ class AddStudy extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -64,7 +78,7 @@ class AddStudy extends Component {
                 this.props.history.push('/studies')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -115,11 +129,11 @@ class AddStudy extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Dodaj smer
+              Dodaj smer (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

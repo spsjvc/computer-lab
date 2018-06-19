@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Icon, message } from 'antd'
 import randomColor from 'randomcolor'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input, Button, Switch, Select, MultiSelect } from '../../components'
@@ -26,6 +27,19 @@ class AddSubject extends Component {
       software: [],
       color: randomColor({ hue: 'green' }),
     },
+  }
+
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/subjects')
+        break
+      case 'alt+2':
+        this.handleSubmit()
+        break
+      default:
+        break
+    }
   }
 
   handleFormInputChange = (field, value) => {
@@ -57,7 +71,6 @@ class AddSubject extends Component {
   isFormValid = () => {
     const isIdInputValid = this.idInput.isValid()
     const isNameInputValid = this.nameInput.isValid()
-    const isDescriptionInputValid = this.descriptionInput.isValid()
     const isGroupSizeInputValid = this.groupSizeInput.isValid()
     const isMinimumLengthInputValid = this.minimumLengthInput.isValid()
     const isNumberOfTermsInputValid = this.numberOfTermsInput.isValid()
@@ -65,7 +78,6 @@ class AddSubject extends Component {
     return (
       isIdInputValid &&
       isNameInputValid &&
-      isDescriptionInputValid &&
       isGroupSizeInputValid &&
       isMinimumLengthInputValid &&
       isNumberOfTermsInputValid
@@ -74,7 +86,7 @@ class AddSubject extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -88,7 +100,7 @@ class AddSubject extends Component {
                 this.props.history.push('/subjects')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -99,7 +111,7 @@ class AddSubject extends Component {
             md={{ span: '12', offset: '1' }}
             lg={{ span: '8', offset: '1' }}
           >
-            <h1>Dodavanje predmeta</h1>
+            <h2>Dodavanje predmeta</h2>
             <Input
               required
               label="Oznaka"
@@ -218,11 +230,11 @@ class AddSubject extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Dodaj predmet
+              Dodaj predmet (⌥ + 2)
             </Button>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }

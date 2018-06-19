@@ -7,6 +7,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import { Row, Col, List, Tabs, Tooltip, Icon } from 'antd'
 import moment from 'moment'
 import { sortBy } from 'lodash'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 
@@ -32,7 +33,12 @@ class Schedule extends Component {
     const minutesDuration = duration.asMinutes() / distanceBetweenMoments
 
     return (
-      <React.Fragment>
+      <Hotkeys
+        keyName="alt+1"
+        onKeyUp={() => {
+          this.props.history.push('/')
+        }}
+      >
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -46,7 +52,7 @@ class Schedule extends Component {
                 this.props.history.push('/')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -174,7 +180,7 @@ class Schedule extends Component {
             </Tabs>
           </Col>
         </Row>
-      </React.Fragment>
+      </Hotkeys>
     )
   }
 }

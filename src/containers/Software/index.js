@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
 import { sortBy, uniq, truncate } from 'lodash'
+import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -12,6 +13,19 @@ class Software extends Component {
   state = {
     displayedData: this.props.software,
     search: '',
+  }
+
+  onKeyUp = (keyName, e, handle) => {
+    switch (keyName) {
+      case 'alt+1':
+        this.props.history.push('/')
+        break
+      case 'alt+2':
+        this.props.history.push('/add-software')
+        break
+      default:
+        break
+    }
   }
 
   handleFilters = filters => {
@@ -36,7 +50,7 @@ class Software extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Hotkeys keyName="alt+1,alt+2" onKeyUp={this.onKeyUp}>
         <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
@@ -50,7 +64,7 @@ class Software extends Component {
                 this.props.history.push('/')
               }}
             >
-              <Icon type="arrow-left" /> Nazad
+              <Icon type="arrow-left" /> Nazad (⌥ + 1)
             </a>
           </Col>
         </Row>
@@ -70,7 +84,7 @@ class Software extends Component {
               }}
             >
               <Icon type="plus-circle-o" />
-              Dodaj novi softver
+              Dodaj novi softver (⌥ + 2)
             </Button>
             <br />
             <Input
@@ -187,7 +201,7 @@ class Software extends Component {
             </Table>
           </Col>
         </Row>
-      </Fragment>
+      </Hotkeys>
     )
   }
 }
