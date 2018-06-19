@@ -111,6 +111,74 @@ const reducer = (state = initialState, action) => {
     case ACTION.SELECT_CLASSROOM:
       return { ...state, selectedClassroom: action.payload }
 
+    case ACTION.SET_EDITING_CLASSROOM:
+      return { ...state, editingClassroom: action.payload }
+
+    case ACTION.EDIT_CLASSROOM: {
+      const updatedClassroom = action.payload
+      const classroomIndex = state.classrooms.map(c => c.id).indexOf(updatedClassroom.id)
+
+      return {
+        ...state,
+        classrooms: [
+          ...state.classrooms.slice(0, classroomIndex),
+          updatedClassroom,
+          ...state.classrooms.slice(classroomIndex + 1),
+        ],
+      }
+    }
+
+    case ACTION.SET_EDITING_SOFTWARE:
+      return { ...state, editingSoftware: action.payload }
+
+    case ACTION.EDIT_SOFTWARE: {
+      const updatedSoftware = action.payload
+      const softwareIndex = state.software.map(s => s.id).indexOf(updatedSoftware.id)
+
+      return {
+        ...state,
+        software: [
+          ...state.software.slice(0, softwareIndex),
+          updatedSoftware,
+          ...state.software.slice(softwareIndex + 1),
+        ],
+      }
+    }
+
+    case ACTION.SET_EDITING_STUDY:
+      return { ...state, editingStudy: action.payload }
+
+    case ACTION.EDIT_STUDY: {
+      const updatedStudy = action.payload
+      const studyIndex = state.studies.map(s => s.id).indexOf(updatedStudy.id)
+
+      return {
+        ...state,
+        studies: [
+          ...state.studies.slice(0, studyIndex),
+          updatedStudy,
+          ...state.studies.slice(studyIndex + 1),
+        ],
+      }
+    }
+
+    case ACTION.SET_EDITING_SUBJECT:
+      return { ...state, editingSubject: action.payload }
+
+    case ACTION.EDIT_SUBJECT: {
+      const updatedSubject = action.payload
+      const subjectIndex = state.subjects.map(s => s.id).indexOf(updatedSubject.id)
+
+      return {
+        ...state,
+        subjects: [
+          ...state.subjects.slice(0, subjectIndex),
+          updatedSubject,
+          ...state.subjects.slice(subjectIndex + 1),
+        ],
+      }
+    }
+
     default:
       return state
   }

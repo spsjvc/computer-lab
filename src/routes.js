@@ -9,6 +9,10 @@ import {
   AddSubject,
   AddSoftware,
   AddClassroom,
+  EditStudy,
+  EditSubject,
+  EditSoftware,
+  EditClassroom,
 } from './containers'
 
 const routes = [
@@ -61,6 +65,26 @@ const routes = [
     path: '/add-classroom',
     exact: true,
     component: AddClassroom,
+  },
+  {
+    path: '/edit-study',
+    exact: true,
+    component: EditStudy,
+  },
+  {
+    path: '/edit-subject',
+    exact: true,
+    component: EditSubject,
+  },
+  {
+    path: '/edit-software',
+    exact: true,
+    component: EditSoftware,
+  },
+  {
+    path: '/edit-classroom',
+    exact: true,
+    component: EditClassroom,
   },
 ]
 

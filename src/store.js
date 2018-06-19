@@ -11,6 +11,10 @@ const initialState =
     ? stateFromStorage
     : {
         selectedClassroom: '101',
+        editingClassroom: null,
+        editingStudy: null,
+        editingSoftware: null,
+        editingSubject: null,
         classrooms: [
           {
             id: '101',
@@ -136,7 +140,7 @@ const initialState =
             manufacturer: 'Microsoft',
             operatingSystem: 'Windows',
             website: 'https://office.live.com/start/Excel.aspx',
-            year: '2017.',
+            year: '2017',
             price: '6000',
             description: '',
           },
@@ -146,7 +150,7 @@ const initialState =
             manufacturer: 'Adobe',
             operatingSystem: 'Linux',
             website: 'https://www.adobe.com/products/photoshop.html',
-            year: '2018.',
+            year: '2018',
             price: '12000',
             description: '',
           },

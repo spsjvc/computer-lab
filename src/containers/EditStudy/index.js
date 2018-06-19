@@ -2,19 +2,25 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Icon, message } from 'antd'
+import { Row, Col, Icon } from 'antd'
 
 import * as actions from './actions'
 import { Input, Button, DatePicker } from '../../components'
 
-class AddStudy extends Component {
+class EditStudy extends Component {
   state = {
     form: {
-      id: '',
-      name: '',
-      date: '',
-      description: '',
+      id: this.props.editingStudy.id,
+      name: this.props.editingStudy.name,
+      date: this.props.editingStudy.date,
+      description: this.props.editingStudy.description,
     },
+  }
+
+  componentWillMount() {
+    if (this.props.editingStudy === null) {
+      this.props.history.push('/studies')
+    }
   }
 
   handleFormInputChange = (field, value) => {
@@ -28,15 +34,8 @@ class AddStudy extends Component {
 
   handleSubmit = () => {
     if (this.isFormValid()) {
-      const studiesIds = this.props.studies.map(s => s.id)
-      const newStudyId = this.state.form.id
-
-      if (studiesIds.includes(newStudyId)) {
-        message.error(`Smer sa oznakom '${newStudyId}' već postoji. Izaberite neku drugu oznaku.`)
-        return
-      }
-
-      this.props.addStudy(this.state.form)
+      this.props.editStudy(this.state.form)
+      this.props.setEditingStudy(this.state.form)
       this.props.history.push('/studies')
     }
   }
@@ -61,6 +60,7 @@ class AddStudy extends Component {
             <a
               onClick={e => {
                 e.preventDefault()
+                this.props.setEditingStudy(null)
                 this.props.history.push('/studies')
               }}
             >
@@ -75,10 +75,11 @@ class AddStudy extends Component {
             md={{ span: '12', offset: '1' }}
             lg={{ span: '8', offset: '1' }}
           >
-            <h2>Dodavanje smera</h2>
+            <h2>Izmena smera</h2>
             <Input
-              required
+              disabled
               label="Oznaka"
+              value={this.props.editingStudy.id}
               placeholder="Unesite oznaku"
               ref={ref => {
                 this.idInput = ref
@@ -90,6 +91,7 @@ class AddStudy extends Component {
             <Input
               required
               label="Naziv"
+              value={this.props.editingStudy.name}
               placeholder="Unesite naziv"
               ref={ref => {
                 this.nameInput = ref
@@ -100,12 +102,14 @@ class AddStudy extends Component {
             />
             <DatePicker
               label="Datum uvođenja"
+              value={this.props.editingStudy.date}
               onChange={value => {
                 this.handleFormInputChange('date', value)
               }}
             />
             <Input
               label="Opis"
+              value={this.props.editingStudy.description}
               placeholder="Unesite opis (opciono)"
               ref={ref => {
                 this.descriptionInput = ref
@@ -115,7 +119,7 @@ class AddStudy extends Component {
               }}
             />
             <Button type="primary" onClick={this.handleSubmit}>
-              Dodaj smer
+              Izmeni smer
             </Button>
           </Col>
         </Row>
@@ -126,6 +130,7 @@ class AddStudy extends Component {
 
 const mapStateToProps = state => ({
   studies: state.studies,
+  editingStudy: state.editingStudy,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
@@ -134,5 +139,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(AddStudy)
+  )(EditStudy)
 )

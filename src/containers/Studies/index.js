@@ -99,7 +99,13 @@ class Studies extends Component {
                 title=""
                 render={row => (
                   <Fragment>
-                    <Button style={{ marginRight: '5px' }}>
+                    <Button
+                      style={{ marginRight: '5px' }}
+                      onClick={() => {
+                        this.props.setEditingStudy(row)
+                        this.props.history.push('/edit-study')
+                      }}
+                    >
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm

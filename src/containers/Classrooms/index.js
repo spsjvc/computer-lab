@@ -167,7 +167,13 @@ class Classrooms extends Component {
                 title=""
                 render={row => (
                   <Fragment>
-                    <Button style={{ marginRight: '5px' }}>
+                    <Button
+                      style={{ marginRight: '5px' }}
+                      onClick={() => {
+                        this.props.setEditingClassroom(row)
+                        this.props.history.push('/edit-classroom')
+                      }}
+                    >
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm

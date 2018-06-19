@@ -11,6 +11,16 @@ class Input extends Component {
     required: false,
   }
 
+  componentWillMount() {
+    const { value } = this.props
+
+    if (value !== undefined) {
+      this.setState({
+        value,
+      })
+    }
+  }
+
   handleChange = event => {
     const { onChange } = this.props
 
@@ -43,7 +53,7 @@ class Input extends Component {
   isValid = () => this.validate()
 
   render() {
-    const { type, label, placeholder, required } = this.props
+    const { type, label, placeholder, required, value, disabled } = this.props
     const { error } = this.state
 
     return (
@@ -55,6 +65,8 @@ class Input extends Component {
           <AntInput
             type={type}
             error={error}
+            disabled={disabled}
+            defaultValue={value}
             placeholder={placeholder}
             onChange={this.handleChange}
           />

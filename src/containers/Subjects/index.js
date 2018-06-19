@@ -172,7 +172,13 @@ class Subjects extends Component {
                 title=""
                 render={row => (
                   <Fragment>
-                    <Button style={{ marginRight: '5px' }}>
+                    <Button
+                      style={{ marginRight: '5px' }}
+                      onClick={() => {
+                        this.props.setEditingSubject(row)
+                        this.props.history.push('/edit-subject')
+                      }}
+                    >
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm

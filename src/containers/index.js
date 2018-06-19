@@ -12,6 +12,11 @@ import AddSubject from './AddSubject'
 import AddSoftware from './AddSoftware'
 import AddClassroom from './AddClassroom'
 
+import EditStudy from './EditStudy'
+import EditSubject from './EditSubject'
+import EditSoftware from './EditSoftware'
+import EditClassroom from './EditClassroom'
+
 export {
   App,
   Home,
@@ -24,4 +29,8 @@ export {
   AddSubject,
   AddSoftware,
   AddClassroom,
+  EditStudy,
+  EditSubject,
+  EditSoftware,
+  EditClassroom,
 }

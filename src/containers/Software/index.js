@@ -126,7 +126,13 @@ class Software extends Component {
                 title=""
                 render={row => (
                   <Fragment>
-                    <Button style={{ marginRight: '5px' }}>
+                    <Button
+                      style={{ marginRight: '5px' }}
+                      onClick={() => {
+                        this.props.setEditingSoftware(row)
+                        this.props.history.push('/edit-software')
+                      }}
+                    >
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm
