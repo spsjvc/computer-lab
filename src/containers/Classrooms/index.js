@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
-import { truncate } from 'lodash'
+import { sortBy, truncate } from 'lodash'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -111,7 +111,7 @@ class Classrooms extends Component {
             />
             <Table
               size="small"
-              dataSource={this.state.displayedData.map(classroom => ({
+              dataSource={sortBy(this.state.displayedData, c => c.id).map(classroom => ({
                 ...classroom,
                 key: classroom.id,
               }))}
@@ -202,11 +202,21 @@ class Classrooms extends Component {
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm
-                      title="Da li ste sigurni da želite da obrišete ovu učionicu?"
+                      title={
+                        <div>
+                          Da li ste sigurni da želite da obrišete ovu učionicu?
+                          <br />
+                          Nakon brisanja morate ponovo da rasporedite termine.
+                        </div>
+                      }
                       okText="Da, obriši učionicu"
                       cancelText="Ne, zadrži učionicu"
                       onConfirm={() => {
                         this.props.deleteClassroom(row.id)
+
+                        this.setState({
+                          displayedData: this.state.displayedData.filter(c => c.id !== row.id),
+                        })
                       }}
                     >
                       <Button type="danger">

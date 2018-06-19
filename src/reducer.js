@@ -27,11 +27,31 @@ const reducer = (state = initialState, action) => {
         software: [...state.software, action.payload],
       }
 
-    case ACTION.DELETE_CLASSROOM:
+    case ACTION.DELETE_CLASSROOM: {
+      const classroomId = action.payload
+
+      const classroom = state.classrooms.find(c => c.id === classroomId)
+      const updatedSubjects = state.subjects
+
+      for (let i = 0; i < classroom.layout.length; i++) {
+        for (let j = 0; j < classroom.layout[i].length; j++) {
+          if (classroom.layout[i][j] !== 0) {
+            if (classroom.layout[i][j - 1] === classroom.layout[i][j]) {
+              continue
+            }
+
+            const subjectIndex = state.subjects.map(s => s.id).indexOf(classroom.layout[i][j])
+            updatedSubjects[subjectIndex].numberOfTermsRemaining++
+          }
+        }
+      }
+
       return {
         ...state,
-        classrooms: state.classrooms.filter(c => c.id !== action.payload),
+        subjects: updatedSubjects,
+        classrooms: state.classrooms.filter(c => c.id !== classroomId),
       }
+    }
 
     case ACTION.DELETE_SUBJECT:
       return {
@@ -46,8 +66,30 @@ const reducer = (state = initialState, action) => {
       }
 
     case ACTION.DELETE_SOFTWARE:
+      const deletedSoftware = action.payload
+
+      const updatedSubjects = state.subjects.map(subject => {
+        const updatedSoftware = subject.software.filter(software => software !== deletedSoftware)
+
+        return {
+          ...subject,
+          software: updatedSoftware,
+        }
+      })
+
+      const updatedClassrooms = state.classrooms.map(classroom => {
+        const updatedSoftware = classroom.software.filter(software => software !== deletedSoftware)
+
+        return {
+          ...classroom,
+          software: updatedSoftware,
+        }
+      })
+
       return {
         ...state,
+        subjects: updatedSubjects,
+        classrooms: updatedClassrooms,
         software: state.software.filter(s => s.id !== action.payload),
       }
 
@@ -176,6 +218,32 @@ const reducer = (state = initialState, action) => {
           updatedSubject,
           ...state.subjects.slice(subjectIndex + 1),
         ],
+      }
+    }
+
+    case ACTION.CLEAR_SUBJECT_SCHEDULE: {
+      const subjectId = action.payload
+
+      const updatedClassrooms = state.classrooms.map(classroom => {
+        let updatedLayout = classroom.layout
+
+        for (let i = 0; i < updatedLayout.length; i++) {
+          for (let j = 0; j < updatedLayout[i].length; j++) {
+            if (updatedLayout[i][j] === subjectId) {
+              updatedLayout[i][j] = 0
+            }
+          }
+        }
+
+        return {
+          ...classroom,
+          layout: updatedLayout,
+        }
+      })
+
+      return {
+        ...state,
+        classrooms: updatedClassrooms,
       }
     }
 

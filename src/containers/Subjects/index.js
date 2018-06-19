@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
-import { uniq, truncate } from 'lodash'
+import { sortBy, uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -112,7 +112,7 @@ class Subjects extends Component {
             <Table
               size="small"
               locale={{ filterConfirm: 'OK', filterReset: 'Poništi', emptyText: 'Nema podataka' }}
-              dataSource={this.state.displayedData.map(subject => ({
+              dataSource={sortBy(this.state.displayedData, s => s.id).map(subject => ({
                 ...subject,
                 key: subject.id,
               }))}
@@ -197,21 +197,36 @@ class Subjects extends Component {
                 title=""
                 render={row => (
                   <Fragment>
-                    <Button
-                      style={{ marginRight: '5px' }}
-                      onClick={() => {
+                    <Popconfirm
+                      title={
+                        <div>
+                          Da li ste sigurni da želite da izmenite ovaj predmet?
+                          <br />
+                          Nakon izmene morate ponovo da rasporedite termine.
+                        </div>
+                      }
+                      okText="Da, izmeni predmet"
+                      cancelText="Ne, zadrži predmet"
+                      onConfirm={() => {
                         this.props.setEditingSubject(row)
                         this.props.history.push('/edit-subject')
                       }}
                     >
-                      <Icon type="edit" />
-                    </Button>
+                      <Button style={{ marginRight: '5px' }}>
+                        <Icon type="edit" />
+                      </Button>
+                    </Popconfirm>
                     <Popconfirm
                       title="Da li ste sigurni da želite da obrišete ovaj predmet?"
                       okText="Da, obriši predmet"
                       cancelText="Ne, zadrži predmet"
                       onConfirm={() => {
                         this.props.deleteSubject(row.id)
+                        this.props.clearSubjectSchedule(row.id)
+
+                        this.setState({
+                          displayedData: this.state.displayedData.filter(s => s.id !== row.id),
+                        })
                       }}
                     >
                       <Button type="danger">

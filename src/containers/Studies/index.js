@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
-import { uniq, truncate } from 'lodash'
+import { Row, Col, Table, Button, Icon, Popconfirm, message } from 'antd'
+import { sortBy, uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -97,7 +97,7 @@ class Studies extends Component {
             <Table
               size="small"
               locale={{ filterConfirm: 'OK', filterReset: 'Poništi', emptyText: 'Nema podataka' }}
-              dataSource={this.state.displayedData.map(study => ({
+              dataSource={sortBy(this.state.displayedData, s => s.id).map(study => ({
                 ...study,
                 key: study.id,
               }))}
@@ -138,7 +138,18 @@ class Studies extends Component {
                       okText="Da, obriši smer"
                       cancelText="Ne, zadrži smer"
                       onConfirm={() => {
+                        if (this.props.subjects.filter(s => s.study === row.id)) {
+                          message.error(
+                            'Nije moguće obrisati smer jer na njemu postoje predmeti. Obrišite ili izmenite predmete i pokušajte ponovo.'
+                          )
+                          return
+                        }
+
                         this.props.deleteStudy(row.id)
+
+                        this.setState({
+                          displayedData: this.state.displayedData.filter(s => s.id !== row.id),
+                        })
                       }}
                     >
                       <Button type="danger">
@@ -158,6 +169,7 @@ class Studies extends Component {
 
 const mapStateToProps = state => ({
   studies: state.studies,
+  subjects: state.subjects,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)

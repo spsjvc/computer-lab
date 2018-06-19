@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
-import { uniq, truncate } from 'lodash'
+import { sortBy, uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
 import { Input } from '../../components'
@@ -96,7 +96,7 @@ class Software extends Component {
             />
             <Table
               size="small"
-              dataSource={this.state.displayedData.map(software => ({
+              dataSource={sortBy(this.state.displayedData, s => s.id).map(software => ({
                 ...software,
                 key: software.id,
               }))}
@@ -161,11 +161,20 @@ class Software extends Component {
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm
-                      title="Da li ste sigurni da želite da obrišete ovaj softver?"
+                      title={
+                        <div>
+                          Da li ste sigurni da želite da obrišete ovaj softver?<br />Softver će biti
+                          uklonjen sa svih predmeta i učionica.
+                        </div>
+                      }
                       okText="Da, obriši softver"
                       cancelText="Ne, zadrži softver"
                       onConfirm={() => {
                         this.props.deleteSoftware(row.id)
+
+                        this.setState({
+                          displayedData: this.state.displayedData.filter(s => s.id !== row.id),
+                        })
                       }}
                     >
                       <Button type="danger">
