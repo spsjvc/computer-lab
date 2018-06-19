@@ -10,21 +10,21 @@ class Home extends Component {
   render() {
     return (
       <Fragment>
-        <Row style={{ marginTop: '50px' }}>
+        <Row style={{ paddingTop: '55px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
             sm={{ span: '16', offset: '4' }}
             md={{ span: '12', offset: '6' }}
-            lg={{ span: '6', offset: '9' }}
+            lg={{ span: '6', offset: '1' }}
           >
-            <h1>Računarski centar</h1>
+            <h2>Računarski centar</h2>
             <Button
               type="primary"
               onClick={() => {
                 this.props.history.push('/classrooms')
               }}
             >
-              Učionice
+              Pregled učionica
             </Button>
             <Button
               type="primary"
@@ -39,7 +39,7 @@ class Home extends Component {
                 this.props.history.push('/subjects')
               }}
             >
-              Predmeti
+              Pregled predmeta
             </Button>
             <Button
               type="primary"
@@ -47,7 +47,7 @@ class Home extends Component {
                 this.props.history.push('/studies')
               }}
             >
-              Smerovi
+              Pregled smerova
             </Button>
             <Button
               type="primary"
@@ -55,7 +55,7 @@ class Home extends Component {
                 this.props.history.push('/software')
               }}
             >
-              Softver
+              Pregled softvera
             </Button>
             <Button
               type="primary"
@@ -63,7 +63,7 @@ class Home extends Component {
                 this.props.history.push('/schedule')
               }}
             >
-              Raspored
+              Raspored po učionicama
             </Button>
           </Col>
         </Row>

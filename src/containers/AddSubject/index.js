@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, message } from 'antd'
+import { Row, Col, Icon, message } from 'antd'
 import randomColor from 'randomcolor'
 
 import * as actions from './actions'
@@ -75,7 +75,24 @@ class AddSubject extends Component {
   render() {
     return (
       <Fragment>
-        <Row style={{ marginTop: '50px' }}>
+        <Row style={{ paddingTop: '20px' }}>
+          <Col
+            xs={{ span: '22', offset: '1' }}
+            sm={{ span: '22', offset: '1' }}
+            md={{ span: '22', offset: '1' }}
+            lg={{ span: '22', offset: '1' }}
+          >
+            <a
+              onClick={e => {
+                e.preventDefault()
+                this.props.history.push('/subjects')
+              }}
+            >
+              <Icon type="arrow-left" /> Nazad
+            </a>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '15px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
             sm={{ span: '16', offset: '1' }}

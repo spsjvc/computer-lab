@@ -3,21 +3,63 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
+import { uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
 
 class Studies extends Component {
+  state = {
+    displayedData: this.props.studies,
+  }
+
+  handleFilters = filters => {
+    this.setState({
+      displayedData: this.props.studies.filter(study => {
+        let passesFilter = true
+
+        Object.entries(filters).forEach(([key, values]) => {
+          if (values.length === 0) {
+            return
+          }
+
+          if (!values.includes(`${study[key]}`)) {
+            passesFilter = false
+          }
+        })
+
+        return passesFilter
+      }),
+    })
+  }
+
   render() {
     return (
       <Fragment>
-        <Row style={{ marginTop: '50px' }}>
+        <Row style={{ paddingTop: '20px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
             sm={{ span: '22', offset: '1' }}
             md={{ span: '22', offset: '1' }}
             lg={{ span: '22', offset: '1' }}
           >
-            <h1>Smerovi</h1>
+            <a
+              onClick={e => {
+                e.preventDefault()
+                this.props.history.push('/')
+              }}
+            >
+              <Icon type="arrow-left" /> Nazad
+            </a>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '15px' }}>
+          <Col
+            xs={{ span: '22', offset: '1' }}
+            sm={{ span: '22', offset: '1' }}
+            md={{ span: '22', offset: '1' }}
+            lg={{ span: '22', offset: '1' }}
+          >
+            <h2>Smerovi</h2>
             <Button
               type="primary"
               style={{ marginBottom: '20px' }}
@@ -28,16 +70,31 @@ class Studies extends Component {
               Dodaj novi smer
             </Button>
             <Table
-              dataSource={this.props.studies.map(study => ({
+              size="small"
+              locale={{ filterConfirm: 'OK', filterReset: 'Poništi', emptyText: 'Nema podataka' }}
+              dataSource={this.state.displayedData.map(study => ({
                 ...study,
                 key: study.id,
               }))}
-              size="small"
+              onChange={(pagination, filters, sorter) => {
+                this.handleFilters(filters)
+              }}
             >
               <Table.Column title="Oznaka" dataIndex="id" />
               <Table.Column title="Naziv" dataIndex="name" />
-              <Table.Column title="Datum uvođenja" dataIndex="date" />
-              <Table.Column title="Opis" dataIndex="description" />
+              <Table.Column
+                title="Datum uvođenja"
+                dataIndex="date"
+                filters={uniq(this.props.studies.map(s => s.date)).map(s => ({
+                  text: s,
+                  value: s,
+                }))}
+              />
+              <Table.Column
+                title="Opis"
+                dataIndex="description"
+                render={description => truncate(description)}
+              />
               <Table.Column
                 title=""
                 render={row => (
@@ -46,9 +103,9 @@ class Studies extends Component {
                       <Icon type="edit" />
                     </Button>
                     <Popconfirm
-                      title="Da li ste sigurni?"
-                      okText="Da"
-                      cancelText="Ne"
+                      title="Da li ste sigurni da želite da obrišete ovaj smer?"
+                      okText="Da, obriši smer"
+                      cancelText="Ne, zadrži smer"
                       onConfirm={() => {
                         this.props.deleteStudy(row.id)
                       }}

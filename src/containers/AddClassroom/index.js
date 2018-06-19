@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, message } from 'antd'
+import { Row, Col, Icon, message } from 'antd'
 
 import * as actions from './actions'
 import { Input, Switch, Button, MultiSelect } from '../../components'
@@ -66,14 +66,31 @@ class AddClassroom extends Component {
   render() {
     return (
       <Fragment>
-        <Row style={{ marginTop: '50px' }}>
+        <Row style={{ paddingTop: '20px' }}>
+          <Col
+            xs={{ span: '22', offset: '1' }}
+            sm={{ span: '22', offset: '1' }}
+            md={{ span: '22', offset: '1' }}
+            lg={{ span: '22', offset: '1' }}
+          >
+            <a
+              onClick={e => {
+                e.preventDefault()
+                this.props.history.push('/classrooms')
+              }}
+            >
+              <Icon type="arrow-left" /> Nazad
+            </a>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '15px' }}>
           <Col
             xs={{ span: '22', offset: '1' }}
             sm={{ span: '16', offset: '1' }}
             md={{ span: '12', offset: '1' }}
             lg={{ span: '8', offset: '1' }}
           >
-            <h1>Dodavanje učionice</h1>
+            <h2>Dodavanje učionice</h2>
             <Input
               required
               label="Oznaka"

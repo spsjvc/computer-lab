@@ -33,7 +33,34 @@ class Schedule extends Component {
 
     return (
       <React.Fragment>
-        <Row style={{ paddingTop: '40px' }}>
+        <Row style={{ paddingTop: '20px' }}>
+          <Col
+            xs={{ span: '22', offset: '1' }}
+            sm={{ span: '22', offset: '1' }}
+            md={{ span: '22', offset: '1' }}
+            lg={{ span: '22', offset: '1' }}
+          >
+            <a
+              onClick={e => {
+                e.preventDefault()
+                this.props.history.push('/')
+              }}
+            >
+              <Icon type="arrow-left" /> Nazad
+            </a>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '15px' }}>
+          <Col
+            xs={{ span: '22', offset: '1' }}
+            sm={{ span: '22', offset: '1' }}
+            md={{ span: '22', offset: '1' }}
+            lg={{ span: '22', offset: '1' }}
+          >
+            <h2>Raspored</h2>
+          </Col>
+        </Row>
+        <Row>
           <Col
             xs={{ span: '3', offset: '1' }}
             sm={{ span: '3', offset: '1' }}
@@ -44,7 +71,7 @@ class Schedule extends Component {
               Predmeti za raspoređivanje:<br />
               <br />
             </div>
-            <div style={{ height: 'calc(100vh - 120px)', overflow: 'auto' }}>
+            <div style={{ height: 'calc(100vh - 180px)', overflow: 'auto' }}>
               <List
                 dataSource={sortBy(this.props.subjects, subject => subject.id)}
                 renderItem={subject =>
