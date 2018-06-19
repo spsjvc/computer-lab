@@ -6,10 +6,12 @@ import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
 import { uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
+import { Input } from '../../components'
 
 class Subjects extends Component {
   state = {
     displayedData: this.props.subjects,
+    search: '',
   }
 
   handleFilters = filters => {
@@ -82,8 +84,31 @@ class Subjects extends Component {
                 this.props.history.push('/add-subject')
               }}
             >
+              <Icon type="plus-circle-o" />
               Dodaj novi predmet
             </Button>
+            <br />
+            <Input
+              prefix={<Icon type="search" />}
+              placeholder="Pretražite predmete po nazivu"
+              onChange={value => {
+                this.setState(
+                  {
+                    search: value,
+                  },
+                  () => {
+                    this.setState({
+                      displayedData:
+                        this.state.search === ''
+                          ? this.props.subjects
+                          : this.props.subjects.filter(s =>
+                              s.name.toLowerCase().includes(this.state.search)
+                            ),
+                    })
+                  }
+                )
+              }}
+            />
             <Table
               size="small"
               locale={{ filterConfirm: 'OK', filterReset: 'Poništi', emptyText: 'Nema podataka' }}

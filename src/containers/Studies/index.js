@@ -6,10 +6,12 @@ import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
 import { uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
+import { Input } from '../../components'
 
 class Studies extends Component {
   state = {
     displayedData: this.props.studies,
+    search: '',
   }
 
   handleFilters = filters => {
@@ -67,8 +69,31 @@ class Studies extends Component {
                 this.props.history.push('/add-study')
               }}
             >
+              <Icon type="plus-circle-o" />
               Dodaj novi smer
             </Button>
+            <br />
+            <Input
+              prefix={<Icon type="search" />}
+              placeholder="Pretražite smerove po nazivu"
+              onChange={value => {
+                this.setState(
+                  {
+                    search: value,
+                  },
+                  () => {
+                    this.setState({
+                      displayedData:
+                        this.state.search === ''
+                          ? this.props.studies
+                          : this.props.studies.filter(s =>
+                              s.name.toLowerCase().includes(this.state.search)
+                            ),
+                    })
+                  }
+                )
+              }}
+            />
             <Table
               size="small"
               locale={{ filterConfirm: 'OK', filterReset: 'Poništi', emptyText: 'Nema podataka' }}

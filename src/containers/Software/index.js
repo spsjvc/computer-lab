@@ -6,10 +6,12 @@ import { Row, Col, Table, Button, Icon, Popconfirm } from 'antd'
 import { uniq, truncate } from 'lodash'
 
 import * as actions from './actions'
+import { Input } from '../../components'
 
 class Software extends Component {
   state = {
     displayedData: this.props.software,
+    search: '',
   }
 
   handleFilters = filters => {
@@ -67,8 +69,31 @@ class Software extends Component {
                 this.props.history.push('/add-software')
               }}
             >
+              <Icon type="plus-circle-o" />
               Dodaj novi softver
             </Button>
+            <br />
+            <Input
+              prefix={<Icon type="search" />}
+              placeholder="Pretražite softver po nazivu"
+              onChange={value => {
+                this.setState(
+                  {
+                    search: value,
+                  },
+                  () => {
+                    this.setState({
+                      displayedData:
+                        this.state.search === ''
+                          ? this.props.software
+                          : this.props.software.filter(s =>
+                              s.name.toLowerCase().includes(this.state.search)
+                            ),
+                    })
+                  }
+                )
+              }}
+            />
             <Table
               size="small"
               dataSource={this.state.displayedData.map(software => ({

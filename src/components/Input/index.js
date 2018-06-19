@@ -53,7 +53,7 @@ class Input extends Component {
   isValid = () => this.validate()
 
   render() {
-    const { type, label, placeholder, required, value, disabled } = this.props
+    const { prefix, type, label, placeholder, required, value, disabled } = this.props
     const { error } = this.state
 
     return (
@@ -63,6 +63,7 @@ class Input extends Component {
         </label>
         <Form.Item hasFeedback help={error} validateStatus={error === '' ? '' : 'error'}>
           <AntInput
+            prefix={prefix}
             type={type}
             error={error}
             disabled={disabled}

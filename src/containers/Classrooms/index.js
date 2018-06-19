@@ -6,10 +6,12 @@ import { Row, Col, Table, Icon, Button, Tag, Popconfirm } from 'antd'
 import { truncate } from 'lodash'
 
 import * as actions from './actions'
+import { Input } from '../../components'
 
 class Classrooms extends Component {
   state = {
     displayedData: this.props.classrooms,
+    search: '',
   }
 
   handleFilters = filters => {
@@ -82,8 +84,31 @@ class Classrooms extends Component {
                 this.props.history.push('/add-classroom')
               }}
             >
+              <Icon type="plus-circle-o" />
               Dodaj novu učionicu
             </Button>
+            <br />
+            <Input
+              prefix={<Icon type="search" />}
+              placeholder="Pretražite učionice po opisu"
+              onChange={value => {
+                this.setState(
+                  {
+                    search: value,
+                  },
+                  () => {
+                    this.setState({
+                      displayedData:
+                        this.state.search === ''
+                          ? this.props.classrooms
+                          : this.props.classrooms.filter(s =>
+                              s.description.toLowerCase().includes(this.state.search)
+                            ),
+                    })
+                  }
+                )
+              }}
+            />
             <Table
               size="small"
               dataSource={this.state.displayedData.map(classroom => ({
