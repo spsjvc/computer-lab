@@ -1,5 +1,6 @@
 import App from './App'
 import Home from './Home'
+import Tutorial from './Tutorial'
 
 import Studies from './Studies'
 import Schedule from './Schedule'
@@ -20,6 +21,7 @@ import EditClassroom from './EditClassroom'
 export {
   App,
   Home,
+  Tutorial,
   Studies,
   Schedule,
   Subjects,

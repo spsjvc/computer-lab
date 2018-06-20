@@ -10,6 +10,8 @@ const initialState =
   stateFromStorage !== null
     ? stateFromStorage
     : {
+        isTutorialVisible: true,
+        tutorialStep: 0,
         selectedClassroom: '101',
         editingClassroom: null,
         editingStudy: null,

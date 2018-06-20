@@ -247,6 +247,18 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case ACTION.SET_IS_TUTORIAL_VISIBLE:
+      return {
+        ...state,
+        isTutorialVisible: action.payload,
+      }
+
+    case ACTION.SET_TUTORIAL_STEP:
+      return {
+        ...state,
+        tutorialStep: action.payload,
+      }
+
     default:
       return state
   }
