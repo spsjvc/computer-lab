@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Icon } from 'antd'
+import { Row, Col, Icon, Tooltip } from 'antd'
 import Hotkeys from 'react-hot-keys'
 
 import * as actions from './actions'
@@ -105,7 +105,13 @@ class EditSubject extends Component {
             md={{ span: '12', offset: '1' }}
             lg={{ span: '8', offset: '1' }}
           >
-            <h2>Izmena predmeta</h2>
+            <h2 style={{ display: 'inline-block', marginRight: 10 }}>Izmena predmeta</h2>
+            <Tooltip title="Podaci koji su obavezni imaju * ispred naziva.">
+              <a style={{ fontSize: 20 }}>
+                <Icon type="question-circle" />
+              </a>
+            </Tooltip>
+            <br />
             <Input
               disabled
               label="Oznaka"

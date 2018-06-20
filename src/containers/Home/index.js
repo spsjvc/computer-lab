@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, message } from 'antd'
+import { Row, Col, Icon, Tooltip, message } from 'antd'
 import Hotkeys from 'react-hot-keys'
 
 import { Button } from '../../components'
@@ -40,14 +40,19 @@ class Home extends Component {
             md={{ span: '12', offset: '6' }}
             lg={{ span: '6', offset: '1' }}
           >
-            <h2>Računarski centar</h2>
+            <h2 style={{ display: 'inline-block', marginRight: 10 }}>Računarski centar</h2>
+            <Tooltip title="Izaberite neku od ponuđenih opcija kako biste imali pregled svih podataka ili radili izmenu / brisanje.">
+              <a style={{ fontSize: 20 }}>
+                <Icon type="question-circle" />
+              </a>
+            </Tooltip>
             <Button
               type="primary"
               onClick={() => {
                 this.props.history.push('/classrooms')
               }}
             >
-              Pregled učionica (⌥ + 1)
+              Učionice (⌥ + 1)
             </Button>
             <Button
               type="primary"
@@ -62,7 +67,7 @@ class Home extends Component {
                 this.props.history.push('/subjects')
               }}
             >
-              Pregled predmeta (⌥ + 2)
+              Predmeti (⌥ + 2)
             </Button>
             <Button
               type="primary"
@@ -70,7 +75,7 @@ class Home extends Component {
                 this.props.history.push('/studies')
               }}
             >
-              Pregled smerova (⌥ + 3)
+              Smerovi (⌥ + 3)
             </Button>
             <Button
               type="primary"
@@ -78,7 +83,7 @@ class Home extends Component {
                 this.props.history.push('/software')
               }}
             >
-              Pregled softvera (⌥ + 4)
+              Softver (⌥ + 4)
             </Button>
             <Button
               type="primary"

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Table, Button, Icon, Popconfirm, message } from 'antd'
+import { Row, Col, Table, Button, Icon, Tooltip, Popconfirm, message } from 'antd'
 import { sortBy, uniq, truncate } from 'lodash'
 import Hotkeys from 'react-hot-keys'
 
@@ -75,7 +75,21 @@ class Studies extends Component {
             md={{ span: '22', offset: '1' }}
             lg={{ span: '22', offset: '1' }}
           >
-            <h2>Smerovi</h2>
+            <h2 style={{ display: 'inline-block', marginRight: 10 }}>Smerovi</h2>
+            <Tooltip
+              title={
+                <div>
+                  Filtrirajte podatke po osobinama klikom na <Icon type="filter" />.<br />
+                  <br /> Izmenite ili obrišite podatke klikom na <Icon type="edit" /> i{' '}
+                  <Icon type="delete" />.
+                </div>
+              }
+            >
+              <a style={{ fontSize: 20 }}>
+                <Icon type="question-circle" />
+              </a>
+            </Tooltip>
+            <br />
             <Button
               type="primary"
               style={{ marginBottom: '20px' }}

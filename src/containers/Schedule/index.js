@@ -63,7 +63,27 @@ class Schedule extends Component {
             md={{ span: '22', offset: '1' }}
             lg={{ span: '22', offset: '1' }}
           >
-            <h2>Raspored</h2>
+            <h2 style={{ display: 'inline-block', marginRight: 10 }}>Raspored</h2>
+            <Tooltip
+              title={
+                <div>
+                  U listi sa leve strane su prikazani predmeti koje je potrebno rasporediti po
+                  terminima.
+                  <br />
+                  <br />
+                  Sa desne strane je prikaz učionica i njihovog rasporeda po danima u nedelji.
+                  <br />
+                  <br />
+                  Pravite raspored tako što prevlačite kartice sa leve strane na odgovarajuće
+                  termine.
+                </div>
+              }
+            >
+              <a style={{ fontSize: 20 }}>
+                <Icon type="question-circle" />
+              </a>
+            </Tooltip>
+            <br />
           </Col>
         </Row>
         <Row>
