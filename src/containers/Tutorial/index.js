@@ -32,7 +32,7 @@ class Tutorial extends Component {
 
     return (
       <Modal
-        width="700px"
+        width="1200px"
         title="Računarski centar"
         closable={false}
         visible={isVisible}
@@ -55,7 +55,7 @@ class Tutorial extends Component {
             <Fragment>
               <img
                 alt={steps[step].image}
-                style={{ width: '600px', border: '1px solid darkgrey', borderRadius: 5 }}
+                style={{ width: '1000px', border: '1px solid darkgrey', borderRadius: 5 }}
                 src={steps[step].image}
               />
               <br />
